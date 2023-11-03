@@ -1,0 +1,185 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de produtos",
+    "description": "Modelagem de uma API REST para gerenciar produtos",
+    "version": "0.1.9"
+  },
+  "servers": [
+    {
+      "url": "http://api.example.com/v1",
+      "description": "Optional server description, e.g. Main (production) server"
+    },
+    {
+      "url": "http://staging-api.example.com",
+      "description": "Optional server description, e.g. Internal staging server for testing"
+    }
+  ],
+  "paths": {
+    "/api/produtos": {
+      "get": {
+        "summary": "Retorna todos os produtos",
+        "responses": {
+          "200": {
+            "description": "Retorna um JSON de array de produtos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "nome": {
+                        "type": "string"
+                      },
+                      "descricao": {
+                        "type": "string"
+                      },
+                      "preco": {
+                        "type": "number"
+                      },
+                      "estoque": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não há produtos cadastrados."
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastra um novo produto",
+        "responses": {},
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string"
+                  },
+                  "descricao": {
+                    "type": "string"
+                  },
+                  "preco": {
+                    "type": "number"
+                  },
+                  "estoque": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/produtos/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "description": "Id do produto",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Recupera detalhes de um produto por ID",
+        "responses": {
+          "200": {
+            "description": "Retorna o produto",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "string",
+                  "nome": "string",
+                  "descricao": "string",
+                  "preco": "number",
+                  "estoque": "integer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produto não encontrado"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclui um produto existente",
+        "responses": {
+          "204": {
+            "description": "O produto foi excluído com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produto não encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza os detalhes de um produto existente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string"
+                  },
+                  "descricao": {
+                    "type": "string"
+                  },
+                  "preco": {
+                    "type": "number"
+                  },
+                  "estoque": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "nome",
+                  "descricao",
+                  "preco",
+                  "estoque"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Produto atualizado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "404": {
+            "description": "Produto não encontrado"
+          }
+        }
+      }
+    }
+  }
+}
